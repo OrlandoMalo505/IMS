@@ -3,9 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IMS.WebApp", "IMS.WebApp\IMS.WebApp.csproj", "{3E827439-5DDD-40EB-91F0-CC565D7437FD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IMS.WebApp", "IMS.WebApp\IMS.WebApp.csproj", "{3E827439-5DDD-40EB-91F0-CC565D7437FD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IMS.UseCases", "IMS.UseCases\IMS.UseCases.csproj", "{A2ACB791-E138-4F74-BAE6-8122709DAA20}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IMS.UseCases", "IMS.UseCases\IMS.UseCases.csproj", "{A2ACB791-E138-4F74-BAE6-8122709DAA20}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IMS.CoreBusiness", "IMS.CoreBusiness\IMS.CoreBusiness.csproj", "{27BB9CAD-A7C6-4EA8-83EF-C2C98F21B949}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IMS.Plugins.EFCore", "IMS.Plugins.EFCore\IMS.Plugins.EFCore.csproj", "{315C1C20-8B23-4550-9201-080D58ECF64D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +25,14 @@ Global
 		{A2ACB791-E138-4F74-BAE6-8122709DAA20}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A2ACB791-E138-4F74-BAE6-8122709DAA20}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A2ACB791-E138-4F74-BAE6-8122709DAA20}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27BB9CAD-A7C6-4EA8-83EF-C2C98F21B949}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27BB9CAD-A7C6-4EA8-83EF-C2C98F21B949}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27BB9CAD-A7C6-4EA8-83EF-C2C98F21B949}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27BB9CAD-A7C6-4EA8-83EF-C2C98F21B949}.Release|Any CPU.Build.0 = Release|Any CPU
+		{315C1C20-8B23-4550-9201-080D58ECF64D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{315C1C20-8B23-4550-9201-080D58ECF64D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{315C1C20-8B23-4550-9201-080D58ECF64D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{315C1C20-8B23-4550-9201-080D58ECF64D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
