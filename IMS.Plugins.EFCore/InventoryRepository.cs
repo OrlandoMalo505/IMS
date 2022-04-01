@@ -1,13 +1,20 @@
 ﻿using IMS.CoreBusiness;
 using IMS.UseCases.PluginInterfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace IMS.Plugins.EFCore
 {
     public class InventoryRepository : IInventoryRepository
     {
-        public Task<IEnumerable<Inventory>> GetInventoriesByName(string name)
+        private readonly IMSContext _context;
+
+        public InventoryRepository(IMSContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
+        }
+        public async Task<IEnumerable<Inventory>> GetInventoriesByName(string name)
+        {
+            return await _context.Inventories.Where(x => x.InventoryName.Contains(name) || string.IsNullOrWhiteSpace(name)).ToListAsync();
         }
     }
 }
