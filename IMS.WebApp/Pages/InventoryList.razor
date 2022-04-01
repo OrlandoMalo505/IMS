@@ -1,5 +1,5 @@
 ﻿@page "/inventories"
-
+@inject NavigationManager _navigation
 <h3>Inventory List</h3>
 <br />
 
@@ -7,6 +7,7 @@
 
 @if(Inventories != null && Inventories.Count > 0)
 {
+    <div class="mb-2">
     <table class="table">
         <thead>
             <tr>
@@ -30,7 +31,10 @@
             }
         </tbody>
     </table>
+    </div>
 }
+<button type="button" class="btn btn-primary" @onclick="AddInventory">Add Inventory</button>
+
 
 
 @code {
@@ -41,5 +45,12 @@
         Inventories = inventories;
 
     }
+
+    private void AddInventory()
+    {
+        _navigation.NavigateTo("/addinventory");
+    }
+
+
 
 }
