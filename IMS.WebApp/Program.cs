@@ -28,8 +28,11 @@ builder.Services.AddDbContext<IMSContext>(options =>
     options.UseInMemoryDatabase("IMS");
 });
 builder.Services.AddTransient<IInventoryRepository, InventoryRepository>();
+
 builder.Services.AddTransient<IViewInventoriesByNameUseCase, ViewInventoriesByNameUseCase>();
 builder.Services.AddTransient<IAddInventoryUseCase, AddInventoryUseCase>();
+builder.Services.AddTransient<IEditInventoryUseCase, EditInventoryUseCase>();
+
 
 var app = builder.Build();
 
