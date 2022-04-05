@@ -1,7 +1,57 @@
-﻿@page "/editinventory"
+﻿@page "/editinventory/{InvId:int}"
+
+@inject IViewInventoryByIdUseCase _viewInventoryById
+@inject IEditInventoryUseCase _editInventory
+@inject NavigationManager _navigation
 
 <h3>Edit Inventory</h3>
 
-@code {
+@if(Inv != null)
+{
+    <EditForm Model="Inv" OnValidSubmit="UpdateInventory">
+        <DataAnnotationsValidator/>
 
+        <div class="form-group">
+            <label for="name">Inventory Name</label>
+            <InputText id="name" @bind-Value="Inv.InventoryName" class="form-control"></InputText>
+             <ValidationMessage For="() => Inv.InventoryName"></ValidationMessage>
+        </div>
+         <div class="form-group">
+            <label for="quantity">Quantity</label>
+            <InputNumber id="quantity" @bind-Value="Inv.Quantity" class="form-control"></InputNumber>
+            <ValidationMessage For="() => Inv.Quantity"></ValidationMessage>
+        </div>
+         <div class="form-group">
+            <label for="price">Price</label>
+            <InputNumber id="price" @bind-Value="Inv.Price" class="form-control"></InputNumber>
+            <ValidationMessage For="() => Inv.Price"></ValidationMessage>
+        </div>
+        <div class="mt-2">
+
+        <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+
+    </EditForm>
+}
+
+
+@code {
+    [Parameter]
+    public int InvId { get; set; }
+
+    public Inventory? Inv { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Inv = await _viewInventoryById.ExecuteAsync(InvId);
+    }
+
+    private async Task UpdateInventory()
+    {
+        if(Inv != null)
+        {
+            await _editInventory.ExecuteAsync(Inv);
+            _navigation.NavigateTo("/inventories");
+        }
+    }
 }
