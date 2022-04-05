@@ -7,20 +7,22 @@
 @if(Inventory != null)
 {
     <EditForm Model="Inventory" OnValidSubmit="CreateInventory">
-        <DataAnnotationsValidator></DataAnnotationsValidator>
-        <ValidationSummary></ValidationSummary>
+        <DataAnnotationsValidator/>
 
         <div class="form-group">
             <label for="name">Inventory Name</label>
             <InputText id="name" @bind-Value="Inventory.InventoryName" class="form-control"></InputText>
+             <ValidationMessage For="() => Inventory.InventoryName"></ValidationMessage>
         </div>
          <div class="form-group">
             <label for="quantity">Quantity</label>
             <InputNumber id="quantity" @bind-Value="Inventory.Quantity" class="form-control"></InputNumber>
+            <ValidationMessage For="() => Inventory.Quantity"></ValidationMessage>
         </div>
          <div class="form-group">
             <label for="price">Price</label>
             <InputNumber id="price" @bind-Value="Inventory.Price" class="form-control"></InputNumber>
+            <ValidationMessage For="() => Inventory.Price"></ValidationMessage>
         </div>
         <div class="mt-2">
 

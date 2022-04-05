@@ -1,5 +1,7 @@
 ﻿@page "/inventories"
 @inject NavigationManager _navigation
+@inject IViewInventoriesByNameUseCase _viewInventories
+
 <h3>Inventory List</h3>
 <br />
 
@@ -38,7 +40,13 @@
 
 
 @code {
-    private List<Inventory> Inventories { get; set; }    
+    private List<Inventory> Inventories { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var invs = await _viewInventories.ExecuteAsync();
+        Inventories = invs.ToList();
+    }
 
     private void SearchInventories(List<Inventory> inventories)
     {
