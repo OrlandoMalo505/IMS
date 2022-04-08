@@ -1,0 +1,31 @@
+﻿@inject NavigationManager _navigation
+
+@if(Product != null)
+{
+<tr>
+   <td>@Product.ProductName</td>
+   <td>@Product.Quantity</td>
+   <td>@Product.Price.ToString("c")</td>
+   <td>
+   <button type="button" class="btn btn-secondary" @onclick="@( () => EditProduct(@Product.ProductId) )">Edit</button>
+   <button type="button" class="btn btn-danger" @onclick="@( () => DeleteProduct(@Product) )">Delete</button>
+   </td>
+ </tr>
+}
+
+@code {
+    [Parameter]
+    public Product Product { get; set; }
+
+
+    private void EditProduct(int id)
+    {
+        _navigation.NavigateTo($"/editproduct/{id}");
+    }
+
+
+    private void DeleteProduct(Product product)
+    {
+        
+    }
+}

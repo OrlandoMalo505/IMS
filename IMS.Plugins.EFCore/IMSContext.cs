@@ -21,17 +21,17 @@ namespace IMS.Plugins.EFCore
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Inventory>().HasData(
-                new Inventory { InventoryId = 1, InventoryName = "Engine", Price = 1000, Quantity = 1},
+                new Inventory { InventoryId = 1, InventoryName = "Gas Engine", Price = 1000, Quantity = 1},
                 new Inventory { InventoryId = 2, InventoryName = "Body", Price = 4000, Quantity = 5},
                 new Inventory { InventoryId = 3, InventoryName = "Wheel", Price = 200, Quantity = 100},
-                new Inventory { InventoryId = 4, InventoryName = "Seat", Price = 70, Quantity = 10}
+                new Inventory { InventoryId = 4, InventoryName = "Seat", Price = 70, Quantity = 10},
+                new Inventory { InventoryId = 5, InventoryName = "Electric Engine", Price = 6000, Quantity = 5 },
+                new Inventory { InventoryId = 6, InventoryName = "Battery", Price = 400, Quantity = 5 }
                 );
 
             modelBuilder.Entity<Product>().HasData(
-                new Product { ProductId = 1, ProductName = "Engine", Price = 1000, Quantity = 1 },
-                new Product { ProductId = 2, ProductName = "Body", Price = 4000, Quantity = 5 },
-                new Product { ProductId = 3, ProductName = "Wheel", Price = 200, Quantity = 100 },
-                new Product { ProductId = 4, ProductName = "Seat", Price = 70, Quantity = 10 }
+                new Product { ProductId = 1, ProductName = "Gas Car", Price = 20000, Quantity = 1 },
+                new Product { ProductId = 2, ProductName = "Electric Car", Price = 15000, Quantity = 5 }   
                 );
         }
     }
