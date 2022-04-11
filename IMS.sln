@@ -7,9 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IMS.WebApp", "IMS.WebApp\IM
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IMS.UseCases", "IMS.UseCases\IMS.UseCases.csproj", "{A2ACB791-E138-4F74-BAE6-8122709DAA20}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IMS.CoreBusiness", "IMS.CoreBusiness\IMS.CoreBusiness.csproj", "{27BB9CAD-A7C6-4EA8-83EF-C2C98F21B949}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IMS.CoreBusiness", "IMS.CoreBusiness\IMS.CoreBusiness.csproj", "{27BB9CAD-A7C6-4EA8-83EF-C2C98F21B949}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IMS.Plugins.EFCore", "IMS.Plugins.EFCore\IMS.Plugins.EFCore.csproj", "{315C1C20-8B23-4550-9201-080D58ECF64D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IMS.Plugins.EFCore", "IMS.Plugins.EFCore\IMS.Plugins.EFCore.csproj", "{315C1C20-8B23-4550-9201-080D58ECF64D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
