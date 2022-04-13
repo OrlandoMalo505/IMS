@@ -42,5 +42,25 @@ namespace IMS.Plugins.EFCore
         {
             return await _context.Products.Where(x => x.ProductName.Contains(name, StringComparison.OrdinalIgnoreCase) || string.IsNullOrWhiteSpace(name)).ToListAsync();
         }
+
+        public async Task UpdateProduct(Product product)
+        {
+            var prod = await _context.Products.FindAsync(product.ProductId);
+
+            if (_context.Products.Any(x => x.ProductId != product.ProductId && x.ProductName.Equals(product.ProductName, StringComparison.OrdinalIgnoreCase)))
+            {
+                return;
+            }
+
+            else if (prod != null)
+            {
+                prod.ProductName = product.ProductName;
+                prod.Price = product.Price;
+                prod.Quantity = product.Quantity;
+                prod.ProductInventories = product.ProductInventories;   
+
+                await _context.SaveChangesAsync();
+            }
+        }
     }
 }

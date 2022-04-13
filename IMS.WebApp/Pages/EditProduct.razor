@@ -1,5 +1,7 @@
 ﻿@page "/editproduct/{ProdId:int}"
 @inject IViewProductByIdUseCase _viewProductById
+@inject IEditProductUseCase _editProduct
+@inject NavigationManager _navigation
 
 <h3>Edit Product</h3>
 
@@ -49,7 +51,12 @@
 
     private async Task UpdateProduct()
     {
+        if(Product != null)
+        {
+            await _editProduct.ExecuteAsync(Product);
+            _navigation.NavigateTo("/products");
 
+        }
     }
 
     private void SelectedInventory(List<ProductInventory> productInventories)

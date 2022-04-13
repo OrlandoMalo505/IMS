@@ -2,7 +2,7 @@
 
 <div class="input-group">
     <input type="text" class="form-control form-control-lg" placeholder="Type inventory name here to search..." @bind-value="InventoryToSearch" />
-    <button type="submit" class="input-group-text btn-success" @onclick="( async() => {await ViewInventories();} )">View</button>
+    <button type="button" class="input-group-text btn-success" @onclick="( async() => {await ViewInventories();} )">View</button>
 
 </div>
 @if(DisplaySearchResult && Inventories != null && selectedInventory == null)

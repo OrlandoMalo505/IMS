@@ -12,5 +12,6 @@ namespace IMS.UseCases.PluginInterfaces
         Task<List<Product>> GetProductsByName(string name);
         Task AddProduct(Product product);
         Task<Product> GetProductById(int id);
+        Task UpdateProduct(Product product);
     }
 }

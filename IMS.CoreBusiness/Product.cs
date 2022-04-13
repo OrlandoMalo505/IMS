@@ -24,7 +24,6 @@ namespace IMS.CoreBusiness
         [Required]
         public double Price { get; set; }
 
-        [Required]
         public List<ProductInventory> ProductInventories { get; set; }
 
         public double TotalInventoryCost()
