@@ -21,7 +21,7 @@
         <tbody>
             @foreach(var prod in Products)
             {
-               <ProductItemComponent Product="prod"></ProductItemComponent>
+               <ProductItemComponent OnProductDeleted="DeleteProduct" Product="prod"></ProductItemComponent>
             }
         </tbody>
     </table>
@@ -35,8 +35,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var prod = await _viewProducts.ExecuteAsync();
-        Products = prod.ToList();
+        await LoadProducts();
     }
 
     private void SearchProducts(List<Product> products)
@@ -49,14 +48,15 @@
         _navigation.NavigateTo("/addproduct");
     }
 
-    //private void EditProduct(int id)
-    //{
-    //    _navigation.NavigateTo($"/editproduct/{id}");
-    //}
+    private async Task DeleteProduct()
+    {
+        await LoadProducts();
+    }
 
+    private async Task LoadProducts()
+    {
+        var prod = await _viewProducts.ExecuteAsync();
+        Products = prod.ToList();
+    }
 
-    //private void DeleteProduct(Product product)
-    //{
-        
-    //}
 }

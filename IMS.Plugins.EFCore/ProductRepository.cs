@@ -28,6 +28,17 @@ namespace IMS.Plugins.EFCore
             await _context.SaveChangesAsync();
         }
 
+        public async Task DeleteProduct(int id)
+        {
+            var prod = await _context.Products.FirstOrDefaultAsync(x => x.ProductId == id);
+            if(prod == null)
+            {
+                return;
+            }
+            prod.IsActive = false;
+            await _context.SaveChangesAsync();  
+        }
+
         public async Task<Product> GetProductById(int id)
         {
             var prod = await _context.Products.Include(i => i.ProductInventories).ThenInclude(x => x.Inventory).FirstOrDefaultAsync(p => p.ProductId == id);
@@ -40,7 +51,8 @@ namespace IMS.Plugins.EFCore
 
         public async Task<List<Product>> GetProductsByName(string name)
         {
-            return await _context.Products.Where(x => x.ProductName.Contains(name, StringComparison.OrdinalIgnoreCase) || string.IsNullOrWhiteSpace(name)).ToListAsync();
+            return await _context.Products.Where(x => (x.ProductName.Contains(name, StringComparison.OrdinalIgnoreCase) 
+                                                 || string.IsNullOrWhiteSpace(name)) && x.IsActive == true).ToListAsync();
         }
 
         public async Task UpdateProduct(Product product)
