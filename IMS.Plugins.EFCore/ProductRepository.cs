@@ -28,6 +28,16 @@ namespace IMS.Plugins.EFCore
             await _context.SaveChangesAsync();
         }
 
+        public async Task<Product> GetProductById(int id)
+        {
+            var prod = await _context.Products.Include(i => i.ProductInventories).ThenInclude(x => x.Inventory).FirstOrDefaultAsync(p => p.ProductId == id);
+            if (prod == null)
+            {
+                return null;
+            }
+            return prod;
+        }
+
         public async Task<List<Product>> GetProductsByName(string name)
         {
             return await _context.Products.Where(x => x.ProductName.Contains(name, StringComparison.OrdinalIgnoreCase) || string.IsNullOrWhiteSpace(name)).ToListAsync();
