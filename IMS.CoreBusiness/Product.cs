@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IMS.CoreBusiness.Validations;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -14,11 +15,34 @@ namespace IMS.CoreBusiness
         [Required]
         public string ProductName { get; set; } = string.Empty;
 
-        [Range(0, int.MaxValue, ErrorMessage ="Quantity must be greater or equal to 0")]
+        [Range(1, int.MaxValue, ErrorMessage ="Quantity must be greater or equal to 1")]
+        [Required]
         public int Quantity { get; set; }
 
-        [Range(0, double.MaxValue, ErrorMessage ="Price must be greater or equal to 0")]
+        [Range(1, double.MaxValue, ErrorMessage ="Price must be greater or equal to 1")]
+        [Product_EnsurePriceIsGreaterThanInventoriesPrice]
+        [Required]
         public double Price { get; set; }
+
+        [Required]
         public List<ProductInventory> ProductInventories { get; set; }
+
+        public double TotalInventoryCost()
+        {
+            return ProductInventories.Sum(x => x.Inventory?.Price * x.InventoryQuantity ?? 0);
+        }
+        public bool ValidatePricing()
+        {
+            if(ProductInventories == null || ProductInventories.Count <= 0)
+            {
+                return true;
+            }
+
+            if(TotalInventoryCost() > Price)
+            {
+                return false;
+            }
+            return true;
+        }
     }
 }

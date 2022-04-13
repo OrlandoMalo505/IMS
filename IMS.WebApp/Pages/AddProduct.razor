@@ -24,9 +24,9 @@
             <InputNumber id="price" @bind-Value="Product.Price" class="form-control"></InputNumber>
             <ValidationMessage For="() => Product.Price"></ValidationMessage>
         </div>
-        <div class="form-group">
-            <ProductInventoriesComponent @ref="ProductInventoriesComponent"></ProductInventoriesComponent>
-        </div>
+        
+            <ProductInventoriesComponent @ref="ProductInventoriesComponent" OnInventorySelected="SelectInventories"></ProductInventoriesComponent>
+        
 
         <div class="mt-2">
         <button type="submit" class="btn btn-primary">Save</button>
@@ -45,11 +45,22 @@
     {
         if (Product != null)
         {
+            ProductInventoriesComponent.ProductInventories.ForEach(x =>
+            {
+                x.ProductId = Product.ProductId;
+            });
+
+            Product.ProductInventories = ProductInventoriesComponent.ProductInventories;
             await _addProduct.ExecuteAsync(Product);
             _navigation.NavigateTo("/products");
 
         }
 
+    }
+
+    private async Task SelectInventories(List<ProductInventory> productInventories)
+    {
+        Product.ProductInventories = productInventories;
     }
 
 }

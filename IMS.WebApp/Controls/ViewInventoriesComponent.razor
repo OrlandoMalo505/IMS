@@ -1,13 +1,13 @@
 ﻿@inject IViewInventoriesByNameUseCase _viewInventories
 
-<div class="input-group mb-3">
+<div class="input-group">
     <input type="text" class="form-control form-control-lg" placeholder="Type inventory name here to search..." @bind-value="InventoryToSearch" />
     <button type="submit" class="input-group-text btn-success" @onclick="( async() => {await ViewInventories();} )">View</button>
 
 </div>
 @if(DisplaySearchResult && Inventories != null && selectedInventory == null)
 {
-    <div style="overflow-y:auto; max-height:300px">
+    <div style="overflow-y:auto; max-height:300px; border:1px solid silver">
         <ul style="list-style-type:none">
             @foreach(var inv in Inventories)
             {
@@ -18,7 +18,7 @@
 }
 @if(selectedInventory != null)
 {
-    <p>@selectedInventory.InventoryName</p>
+    <p class="ms-2">@selectedInventory.InventoryName</p>
 }
 
 
