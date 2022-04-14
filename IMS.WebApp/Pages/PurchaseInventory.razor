@@ -1,0 +1,52 @@
+﻿@page "/purchase"
+
+<h3>Purchase Inventory</h3>
+<br />
+
+@if (PurchaseViewModel != null)
+{
+    <EditForm Model="PurchaseViewModel" OnValidSubmit="OnValidSubmit">
+          <DataAnnotationsValidator/>
+
+        <div class="form-group">
+            <label for="po">Purchase Order</label>
+            <InputText id="po" @bind-Value="PurchaseViewModel.PurchaseOrder" class="form-control"></InputText>
+             <ValidationMessage For="() => PurchaseViewModel.PurchaseOrder"></ValidationMessage>
+        </div>
+         <div class="form-group">
+            <label for="inv">Inventory to Purchase</label>
+            <ViewInventoriesComponent OnSelectInventory="SelectInventory" DisplaySearchResult="true"></ViewInventoriesComponent>
+            <InputText id="inv" @bind-Value="PurchaseViewModel.InventoryName" class="form-control" disabled></InputText>
+            <ValidationMessage For="() => PurchaseViewModel.InventoryName"></ValidationMessage>
+            @*<input type="text" disabled value="@SelectedInventory?.InventoryName" class="form-control"/>*@
+            <input type="hidden" value="@PurchaseViewModel?.InventoryId"/>
+        </div>
+        <div class="form-group">
+            <label for="quantity">Quantity</label>
+            <InputNumber id="quantity" @bind-Value="PurchaseViewModel.Quantity" class="form-control"></InputNumber>
+            <ValidationMessage For="() => PurchaseViewModel.Quantity"></ValidationMessage>
+        </div>
+
+        <div class="mt-2">
+        <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+    </EditForm>
+}
+
+
+@code {
+    private PurchaseViewModel PurchaseViewModel { get; set; } = new();
+    public Inventory SelectedInventory { get; set; }
+
+    private void SelectInventory(Inventory inventory)
+    {
+        SelectedInventory = inventory;
+        PurchaseViewModel.InventoryId = inventory.InventoryId;
+        PurchaseViewModel.InventoryName = inventory.InventoryName;
+    }
+
+    private void OnValidSubmit()
+    {
+        
+    }
+}
