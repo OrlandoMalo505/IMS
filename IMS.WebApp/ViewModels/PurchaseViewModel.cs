@@ -17,5 +17,8 @@ namespace IMS.WebApp.ViewModels
         [Required]
         [Range(1, int.MaxValue, ErrorMessage ="Quantity must be greater or equal to 1")]
         public int Quantity { get; set; }
+
+        [Required]
+        public double InventoryPrice { get; set; }
     }
 }

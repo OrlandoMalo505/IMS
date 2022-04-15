@@ -1,4 +1,5 @@
 ﻿@page "/purchase"
+@inject IPurchaseInventoryUseCase _purchaseInventory
 
 <h3>Purchase Inventory</h3>
 <br />
@@ -18,8 +19,13 @@
             <ViewInventoriesComponent OnSelectInventory="SelectInventory" DisplaySearchResult="true"></ViewInventoriesComponent>
             <InputText id="inv" @bind-Value="PurchaseViewModel.InventoryName" class="form-control" disabled></InputText>
             <ValidationMessage For="() => PurchaseViewModel.InventoryName"></ValidationMessage>
-            @*<input type="text" disabled value="@SelectedInventory?.InventoryName" class="form-control"/>*@
             <input type="hidden" value="@PurchaseViewModel?.InventoryId"/>
+            @if(SelectedInventory != null)
+            {
+                <p>&nbsp; Price: @SelectedInventory.Price.ToString("c")</p>
+            }
+
+
         </div>
         <div class="form-group">
             <label for="quantity">Quantity</label>
@@ -28,7 +34,7 @@
         </div>
 
         <div class="mt-2">
-        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="submit" class="btn btn-primary">Purchase</button>
         </div>
     </EditForm>
 }
@@ -45,8 +51,11 @@
         PurchaseViewModel.InventoryName = inventory.InventoryName;
     }
 
-    private void OnValidSubmit()
+    private async Task OnValidSubmit()
     {
-        
+        await _purchaseInventory.ExecuteAsync(PurchaseViewModel.PurchaseOrder, SelectedInventory, PurchaseViewModel.Quantity, "Orlando");
+
+        PurchaseViewModel = new();
+        SelectedInventory = null;
     }
 }
