@@ -1,0 +1,75 @@
+﻿@page "/produce"
+@inject IProduceProductUseCase _produceProduct
+@inject IValidateEnoughInventoriesForProducingUseCase _validateProducing
+
+<ErrorMessageComponent ErrorMessage="@errorMessage"></ErrorMessageComponent>
+<h3>Produce Product</h3>
+<br />
+
+@if (ProduceViewModel != null)
+{
+    <EditForm Model="ProduceViewModel" OnValidSubmit="OnValidSubmit">
+          <DataAnnotationsValidator/>
+
+        <div class="form-group">
+            <label for="pn">Production Number</label>
+            <InputText id="pn" @bind-Value="ProduceViewModel.ProductionNumber" class="form-control"></InputText>
+             <ValidationMessage For="() => ProduceViewModel.ProductionNumber"></ValidationMessage>
+        </div>
+         <div class="form-group">
+            <label for="prod">Product Name </label>
+            <ViewProductsComponent OnSelectProduct="SelectProduct" DisplaySearchResult="true"></ViewProductsComponent>
+            <InputText id="prod" @bind-Value="ProduceViewModel.ProductName" class="form-control" disabled></InputText>
+            <ValidationMessage For="() => ProduceViewModel.ProductName"></ValidationMessage>
+            <input type="hidden" value="@ProduceViewModel?.ProductId"/>
+            @if(selectedProduct != null)
+            {
+                <p>&nbsp; Price: @selectedProduct.Price.ToString("c")</p>
+            }
+
+
+        </div>
+        <div class="form-group">
+            <label for="quantity">Quantity</label>
+            <InputNumber id="quantity" @bind-Value="ProduceViewModel.QuantityToProduce" class="form-control"></InputNumber>
+            <ValidationMessage For="() => ProduceViewModel.QuantityToProduce"></ValidationMessage>
+        </div>
+
+        <div class="mt-2">
+        <button type="submit" class="btn btn-primary">Purchase</button>
+        </div>
+    </EditForm>
+}
+
+@code {
+    private ProduceViewModel ProduceViewModel { get; set; } = new();
+
+    private Product selectedProduct;
+
+    private string errorMessage { get; set; }
+
+    private async Task OnValidSubmit()
+    {
+        if(!await _validateProducing.ExecuteAsync(selectedProduct, selectedProduct.Quantity))
+        {
+            errorMessage = $"The inventories are not enough for producing {selectedProduct.ProductName} x {ProduceViewModel.QuantityToProduce} times!";
+            return; 
+        }
+        else
+        {
+            errorMessage = string.Empty;
+        }
+
+        await _produceProduct.ExecuteAsync(ProduceViewModel.ProductionNumber, selectedProduct, ProduceViewModel.QuantityToProduce, "Orlando");
+
+        ProduceViewModel = new ProduceViewModel();
+        selectedProduct = null;
+    }
+
+    public void SelectProduct(Product product)
+    {
+        selectedProduct = product;
+        ProduceViewModel.ProductId = product.ProductId;
+        ProduceViewModel.ProductName = product.ProductName;
+    }
+}
