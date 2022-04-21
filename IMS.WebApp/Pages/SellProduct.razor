@@ -1,0 +1,79 @@
+﻿@page "/sellproduct"
+@inject ISellProductUseCase _sellProduct
+
+<ErrorMessageComponent ErrorMessage="@errorMessage"></ErrorMessageComponent>
+
+<h3>Sell Product</h3>
+<br />
+
+@if (SellViewModel != null)
+{
+    <EditForm Model="SellViewModel" OnValidSubmit="OnValidSubmit">
+          <DataAnnotationsValidator/>
+
+        <div class="form-group">
+            <label for="pn">Sales Number</label>
+            <InputText id="pn" @bind-Value="SellViewModel.SalesOrderNumber" class="form-control"></InputText>
+             <ValidationMessage For="() => SellViewModel.SalesOrderNumber"></ValidationMessage>
+        </div>
+         <div class="form-group">
+            <label for="prod">Product Name </label>
+            <ViewProductsComponent OnSelectProduct="SelectProduct" DisplaySearchResult="true"></ViewProductsComponent>
+            <InputText id="prod" @bind-Value="SellViewModel.ProductName" class="form-control" disabled></InputText>
+            <ValidationMessage For="() => SellViewModel.ProductName"></ValidationMessage>
+            <input type="hidden" value="@SellViewModel?.ProductId"/>
+        </div>
+
+         <div class="form-group">
+            <label for="price">Price</label>
+            <InputNumber id="price" @bind-Value="SellViewModel.ProductPrice" class="form-control"></InputNumber>
+            <ValidationMessage For="() => SellViewModel.ProductPrice"></ValidationMessage>
+        </div>
+
+        <div class="form-group">
+            <label for="quantity">Quantity</label>
+            <InputNumber id="quantity" @bind-Value="SellViewModel.QuantityToSell" class="form-control"></InputNumber>
+            <ValidationMessage For="() => SellViewModel.QuantityToSell"></ValidationMessage>
+        </div>
+
+        <div class="mt-2">
+        <button type="submit" class="btn btn-primary">Sell</button>
+        </div>
+    </EditForm>
+}
+
+@code {
+
+    private SellViewModel SellViewModel { get; set; } = new();
+
+    private Product selectedProduct;
+
+    private string errorMessage { get; set; }
+
+    private async Task OnValidSubmit()
+    {
+        if (selectedProduct.Quantity < SellViewModel.QuantityToSell)
+        {
+            errorMessage = $"Not enough products in store. Only {selectedProduct.Quantity} left.";
+            return;
+        }
+        else
+        {
+            errorMessage = string.Empty;
+
+        }
+            await _sellProduct.ExecuteAsync(SellViewModel.SalesOrderNumber, selectedProduct, SellViewModel.QuantityToSell, "Orlando");
+
+            SellViewModel = new();
+            selectedProduct = null;
+            errorMessage = string.Empty;
+    }
+
+    public void SelectProduct(Product product)
+    {
+        selectedProduct = product;
+        SellViewModel.ProductId = product.ProductId;
+        SellViewModel.ProductName = product.ProductName;
+        SellViewModel.ProductPrice = product.Price;
+    }
+}

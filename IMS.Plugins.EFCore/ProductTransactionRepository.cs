@@ -12,17 +12,14 @@ namespace IMS.Plugins.EFCore
     public class ProductTransactionRepository : IProductTransactionRepository
     {
         private readonly IMSContext _context;
-        private readonly IProductRepository _productRepository;
 
         public ProductTransactionRepository(IMSContext context, IProductRepository productRepository)
         {
             _context = context;
-            _productRepository = productRepository;
         }
 
         public async Task ProduceAsync(string productionNumber, Product product, int quantity, double price, string doneBy)
         {
-            //var prod = _productRepository.GetProductById(product.ProductId);
             var prod = await _context.Products
                 .Include(x => x.ProductInventories)
                 .ThenInclude(x => x.Inventory)
@@ -48,6 +45,22 @@ namespace IMS.Plugins.EFCore
                 UnitPrice = price
             });
 
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task SellProductAsync(string salesOrderNumber, Product product, int quantity, double price, string doneBy)
+        {
+            _context.ProductTransactions.Add(new ProductTransaction
+            {
+                SalesOrderNumber = salesOrderNumber,
+                ProductId = product.ProductId,
+                QuantityBefore = product.Quantity,
+                QuantityAfter= product.Quantity - quantity,
+                TransactionDate = DateTime.Now,
+                DoneBy = doneBy,
+                ActivityType = ProductTransactionType.SellProduct,
+                UnitPrice= price
+            });
             await _context.SaveChangesAsync();
         }
     }
