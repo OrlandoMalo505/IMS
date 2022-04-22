@@ -16,8 +16,8 @@ namespace IMS.UseCases.Reports
         {
             _inventoryTransactionRepository = inventoryTransactionRepository;
         }
-        public async Task<IEnumerable<InventoryTransaction>> ExecuteAsync(string inventoryName, DateTime dateFrom,
-            DateTime dateTo, InventoryTransactionType transactionType)
+        public async Task<IEnumerable<InventoryTransaction>> ExecuteAsync(string inventoryName, DateTime? dateFrom,
+            DateTime? dateTo, InventoryTransactionType? transactionType)
         {
             return await _inventoryTransactionRepository.GetInventoryTransactionsAsync(inventoryName, dateFrom, dateTo, transactionType);
         }

@@ -26,8 +26,6 @@
             {
                 <p>&nbsp; Price: @selectedProduct.Price.ToString("c")</p>
             }
-
-
         </div>
         <div class="form-group">
             <label for="quantity">Quantity</label>
@@ -44,7 +42,7 @@
 @code {
     private ProduceViewModel ProduceViewModel { get; set; } = new();
 
-    private Product selectedProduct;
+    public Product selectedProduct { get; set; }
 
     private string errorMessage { get; set; }
 
@@ -62,7 +60,7 @@
 
         await _produceProduct.ExecuteAsync(ProduceViewModel.ProductionNumber, selectedProduct, ProduceViewModel.QuantityToProduce, "Orlando");
 
-        ProduceViewModel = new ProduceViewModel();
+        ProduceViewModel = new();
         selectedProduct = null;
         errorMessage = string.Empty;
     }
