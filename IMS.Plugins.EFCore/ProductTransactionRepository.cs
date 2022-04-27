@@ -80,5 +80,19 @@ namespace IMS.Plugins.EFCore
             });
             await _context.SaveChangesAsync();
         }
+
+
+        public async Task<IEnumerable<ProductTransaction>> GetProductTransactionsAsync(string productName, DateTime? dateFrom, DateTime? dateTo, ProductTransactionType? transactionType)
+        {
+            var query = from pt in _context.ProductTransactions
+                        join prod in _context.Products on pt.ProductId equals prod.ProductId
+                        where
+                        (string.IsNullOrWhiteSpace(productName) || prod.ProductName.Contains(productName, StringComparison.OrdinalIgnoreCase))
+                        && (!dateFrom.HasValue || pt.TransactionDate >= dateFrom.Value.Date)
+                        && (!dateTo.HasValue || pt.TransactionDate <= dateTo.Value.Date)
+                        && (!transactionType.HasValue || pt.ActivityType == transactionType)
+                        select pt;
+            return await query.Include(x => x.Product).ToListAsync();
+        }
     }
 }
