@@ -1,9 +1,11 @@
 ﻿@page "/productreport"
 @inject ISearchProductTransactionsUseCase _searchProduct
+@inject IJSRuntime _jsRuntime
 
 <h3>Product Transactions</h3>
 <br />
 
+<div id="printarea">
 <div class="row">
 
     <div class="col">
@@ -33,6 +35,10 @@
     <div class="col">
         <label>&nbsp;</label>
         <button type="button" class="btn btn-primary form-control" @onclick="SearchProducts">Search</button>
+    </div>
+     <div class="col">
+        <label>&nbsp;</label>
+        <button type="button" class="btn btn-primary form-control" @onclick="PrintReport">Print</button>
     </div>
 </div>
 <br />
@@ -76,6 +82,7 @@
         </tbody>
     </table>
 }
+</div>
 
 @code {
 
@@ -95,5 +102,10 @@
         }
 
         Products = await _searchProduct.ExecuteAsync(ProductName, DateFrom, DateTo, productTransactionType);
+    }
+
+    private void PrintReport()
+    {
+        _jsRuntime.InvokeVoidAsync("print");
     }
 }
