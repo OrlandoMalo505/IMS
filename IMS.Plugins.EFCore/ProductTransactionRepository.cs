@@ -84,6 +84,9 @@ namespace IMS.Plugins.EFCore
 
         public async Task<IEnumerable<ProductTransaction>> GetProductTransactionsAsync(string productName, DateTime? dateFrom, DateTime? dateTo, ProductTransactionType? transactionType)
         {
+            if(dateTo.HasValue)
+                dateTo = dateTo.Value.AddDays(1);
+
             var query = from pt in _context.ProductTransactions
                         join prod in _context.Products on pt.ProductId equals prod.ProductId
                         where

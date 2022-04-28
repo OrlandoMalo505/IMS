@@ -21,6 +21,9 @@ namespace IMS.Plugins.EFCore
         public async Task<IEnumerable<InventoryTransaction>> GetInventoryTransactionsAsync(string inventoryName, DateTime? dateFrom,
             DateTime? dateTo, InventoryTransactionType? transactionType)
         {
+            if (dateTo.HasValue)
+                dateTo = dateTo.Value.AddDays(1);
+
             var query = from it in _context.InventoryTransactions
                         join inv in _context.Inventories on it.InventoryId equals inv.InventoryId
                         where
