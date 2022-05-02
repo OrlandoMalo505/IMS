@@ -1,6 +1,7 @@
 ﻿@page "/produce"
 @inject IProduceProductUseCase _produceProduct
 @inject IValidateEnoughInventoriesForProducingUseCase _validateProducing
+@attribute [Authorize]
 
 <ErrorMessageComponent ErrorMessage="@errorMessage"></ErrorMessageComponent>
 <h3>Produce Product</h3>
