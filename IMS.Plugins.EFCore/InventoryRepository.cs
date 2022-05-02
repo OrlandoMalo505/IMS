@@ -15,7 +15,7 @@ namespace IMS.Plugins.EFCore
 
         public async Task AddInventoryAsync(Inventory inventory)
         {
-            if (_context.Inventories.Any(inv => inv.InventoryName.Equals(inventory.InventoryName, StringComparison.OrdinalIgnoreCase)))
+            if (_context.Inventories.Any(inv => inv.InventoryName.ToLower() == inventory.InventoryName.ToLower()))
             {
                 return;
             }
