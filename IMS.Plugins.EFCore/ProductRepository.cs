@@ -20,7 +20,11 @@ namespace IMS.Plugins.EFCore
 
         public async Task AddProduct(Product product)
         {
-            if(_context.Products.Any(x => x.ProductName.Equals(product.ProductName, StringComparison.OrdinalIgnoreCase)))
+            //if (_context.Products.Any(x => x.ProductName.Equals(product.ProductName, StringComparison.OrdinalIgnoreCase)))
+            //{
+            //    return;
+            //}
+            if (_context.Products.Any(x => x.ProductName.ToLower() == product.ProductName.ToLower()))
             {
                 return;
             }
@@ -51,7 +55,7 @@ namespace IMS.Plugins.EFCore
 
         public async Task<List<Product>> GetProductsByName(string name)
         {
-            return await _context.Products.Where(x => (x.ProductName.Contains(name, StringComparison.OrdinalIgnoreCase) 
+            return await _context.Products.Where(x => (x.ProductName.ToLower().IndexOf(name.ToLower()) >= 0 
                                                  || string.IsNullOrWhiteSpace(name)) && x.IsActive == true).ToListAsync();
         }
 
@@ -59,7 +63,7 @@ namespace IMS.Plugins.EFCore
         {
             var prod = await _context.Products.FindAsync(product.ProductId);
 
-            if (_context.Products.Any(x => x.ProductId != product.ProductId && x.ProductName.Equals(product.ProductName, StringComparison.OrdinalIgnoreCase)))
+            if (_context.Products.Any(x => x.ProductId != product.ProductId && x.ProductName.ToLower() == product.ProductName.ToLower()))
             {
                 return;
             }

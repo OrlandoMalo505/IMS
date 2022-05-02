@@ -25,7 +25,10 @@ namespace IMS.Plugins.EFCore
 
         public async Task<IEnumerable<Inventory>> GetInventoriesByName(string name)
         {
-            return await _context.Inventories.Where(x => x.InventoryName.Contains(name, StringComparison.OrdinalIgnoreCase) || string.IsNullOrWhiteSpace(name)).ToListAsync();
+
+            return await _context.Inventories.Where(x => x.InventoryName.ToLower().IndexOf(name.ToLower()) 
+            >= 0).ToListAsync();
+            //return await _context.Inventories.Where(x => x.InventoryName.Contains(name, StringComparison.OrdinalIgnoreCase) || string.IsNullOrWhiteSpace(name)).ToListAsync();
         }
 
         public async Task<Inventory?> GetInventoryById(int id)
@@ -42,7 +45,7 @@ namespace IMS.Plugins.EFCore
         {
             var inv = await _context.Inventories.FindAsync(inventory.InventoryId);
 
-            if (_context.Inventories.Any(x => x.InventoryId != inventory.InventoryId && x.InventoryName.Equals(inventory.InventoryName, StringComparison.OrdinalIgnoreCase)))
+            if (_context.Inventories.Any(x => x.InventoryId != inventory.InventoryId && x.InventoryName.ToLower() == inventory.InventoryName.ToLower()))
             {
                 return;
             }
